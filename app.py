@@ -27,11 +27,11 @@ async def cord(ctx):
 @bot.command(name="help")
 async def help(ctx):
     image_link = await callapi()
-    helpembed = nextcord.Embed(title = "DogCord Help", description = ":thumbsup: - Like\n\n:thumbsdown: - Dislike\n\n:arrow_forward: - Next\n\n:negative_squared_cross_mark: - Close\n\n:heart: - Favourite (sent a copy in DMS)")
+    helpembed = nextcord.Embed(title = HELP_Title, description = HELP_Description)
     helpembed.set_image(url = image_link)
-    helpembed.add_field(name = "dog!cord", value = "opens DogCord", inline=True)
-    helpembed.add_field(name = "dog!api", value = "sends a link to the API", inline=True)
-    helpembed.add_field(name = "dog!help", value = "shows this message", inline=True)
+    helpembed.add_field(name = "dog!cord", value = HELP_cord, inline=True)
+    helpembed.add_field(name = "dog!api", value = HELP_api, inline=True)
+    helpembed.add_field(name = "dog!help", value = HELP_help, inline=True)
     m = await ctx.send(embed = helpembed)
     reactions = ["❎"]
     for name in reactions:
@@ -40,7 +40,7 @@ async def help(ctx):
 
 @bot.command(name="api")
 async def api(ctx):
-    m = await ctx.send("https://dog.ceo/dog-api/")
+    m = await ctx.send(API_MAN)
     reactions = ["❎"]
     for name in reactions:
         emoji = get(ctx.guild.emojis, name=name)
@@ -49,7 +49,7 @@ async def api(ctx):
 @bot.event
 async def on_ready():
     print(f'Logged in as: {bot.user.name}')
-    await bot.change_presence(activity = nextcord.Activity(type=nextcord.ActivityType.playing, name = "🐶 DogCord / dog ! help"))
+    await bot.change_presence(activity = nextcord.Activity(type=nextcord.ActivityType.playing, name = STATUS))
 
 @bot.event
 async def on_reaction_add(reaction, user):
@@ -72,7 +72,7 @@ async def on_reaction_add(reaction, user):
                 try:
                     await user.send(reaction.message.content)
                 except nextcord.errors.Forbidden:
-                    e = await reaction.message.channel.send(f"{user.mention} there was an error favouriting that image! The bot may be at capacity or your DM's may be closed.")
+                    e = await reaction.message.channel.send(f"{user.mention} {ERROR_favourite_DM_closed}")
                     reactions = ["❎"]
                     for name in reactions:
                         emoji = get(e.guild.emojis, name=name)
