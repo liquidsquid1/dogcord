@@ -9,6 +9,7 @@ pip3 install -r requirements
 
 ## Warning: Make sure to add your bot token.
 Alot of people forget to add the bot token. It's located under `config.py` and needs to be replaced before the server can run, otherwise there will be an error.
+Also, the bot requires message content intents!
 
 ## Running
 From the command line, change into the directory of dogcord and run:
